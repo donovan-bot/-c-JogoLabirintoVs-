@@ -1,0 +1,119 @@
+using System;
+
+namespace maisUmTeste
+{
+    class Program
+    {
+        static string tituloDoJogo = "Meu jogo de labirinto";
+
+        static String[,] labirinto = new string[10, 26]{
+            {"█","█","█","█","█","█","█","█","█","█","█","█","█","█","█","█","█","█","█","█","█","█","█","█","█","█"},
+            {"█"," "," "," "," "," "," ","█","█","█","█"," "," "," "," ","█","█"," "," "," ","█","█","█","█","█","█"},
+            {"█","█"," ","█","█","█","█","█"," "," "," "," ","█","█","█","█","█"," ","█"," "," "," ","█"," "," ","F"},
+            {"█","█"," "," "," ","█","█"," "," ","█","█"," "," "," ","█"," "," "," ","█"," ","█","█","█"," ","█","█"},
+            {"█","█"," ","█"," ","█","█"," ","█","█"," "," ","█","█","█"," ","█","█","█"," "," "," "," "," ","█","█"},
+            {"█"," "," ","█"," ","█","█"," ","█","█"," ","█","█","█","█"," ","█","█","█"," ","█","█","█","█","█","█"},
+            {"█"," ","█","█"," ","█","█"," ","█"," "," ","█","█"," "," "," "," "," ","█"," ","█","█","█","█"," ","█"},
+            {"█"," ","█","█"," "," "," "," ","█"," ","█","█","█","█","█"," ","█","█","█"," "," "," "," "," "," ","█"},
+            {"█"," ","█","█","█","█","█","█","█"," "," "," "," "," "," "," "," ","█","█","█","█","█","█","█","█","█"},
+            {"█","█","█","█","█","█","█","█","█","█","█","█","█","█","█","█","█","█","█","█","█","█","█","█","█","█"}
+
+
+        };
+
+        static String jogador = "*";
+
+        static int posLinha = 8;
+        static int posColuna = 1;
+
+        static void Main(string[] args)
+        {
+            Console.Title = tituloDoJogo;
+            bool fimDeJogo = false;
+
+            while (!fimDeJogo)
+            {
+                Console.Clear();
+
+                labirinto[posLinha, posColuna] = jogador;
+
+                for (int linha = 0; linha < 10; linha++)
+                {
+                    for (int coluna = 0; coluna < 26; coluna++)
+                    {
+                        Console.Write(labirinto[linha, coluna]);
+
+                    }
+                    Console.WriteLine();
+
+                }
+                System.Console.WriteLine();
+                System.Console.WriteLine("Para onde vc deseja ir?");
+                System.Console.WriteLine("> W = cima");
+                System.Console.WriteLine("> A = esquerda");
+                System.Console.WriteLine("> S = baixo");
+                System.Console.WriteLine("> D = direita");
+                System.Console.WriteLine();
+                System.Console.Write("Meu comando é: ");
+
+                ConsoleKeyInfo info = Console.ReadKey(true);
+
+
+                //as instrucoes switch pq o if e else dao um bug
+
+                switch (info.KeyChar)
+                {
+                    case 'w':
+                        if (labirinto[posLinha - 1, posColuna] != "█")
+                        {
+                            labirinto[posLinha, posColuna] = " ";
+                            posLinha--;
+
+                        }
+                        break;
+                    case 'a':
+                        if (labirinto[posLinha, posColuna - 1] != "█")
+                        {
+                            labirinto[posLinha, posColuna] = " ";
+                            posColuna--;
+
+                        }
+                        break;
+                    case 's':
+                        if (labirinto[posLinha + 1, posColuna] != "█")
+                        {
+                            labirinto[posLinha, posColuna] = " ";
+                            posLinha++;
+
+                        }
+                        break;
+                    case 'd':
+                        if (labirinto[posLinha, posColuna + 1] != "█")
+                        {
+                            labirinto[posLinha, posColuna] = " ";
+                            posColuna++;
+
+                        }
+                        break;
+
+
+                }
+                //pra quando chegar no f o while parar
+
+
+                labirinto[posLinha, posColuna] = jogador;
+                if (labirinto[2, 25] == jogador)
+                {
+                    fimDeJogo = true;
+                }
+            }
+            Console.Clear();
+            System.Console.WriteLine("Parabéns você chegou ao fim do labirinto.");
+            System.Console.WriteLine("Pressione ENTER para finalizar!. ");
+            Console.ReadKey();
+
+
+
+        }
+    }
+}
